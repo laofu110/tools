@@ -1,0 +1,19 @@
+{
+    "name": "laofu110/tools",
+    "description": "some tools contain chinese convert to pinyin",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "laofu110",
+            "email": "549566440@qq.com"
+        }
+    ],
+    "require": {
+	   "php":">=5.5.0"
+	},
+	"autoload":{
+	    "psr-4":{
+		    "Laofu\\Tools":"src"
+		}	 
+	}
+}
