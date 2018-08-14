@@ -1,6 +1,9 @@
 {
     "name": "laofu110/tools",
     "description": "some tools contain chinese convert to pinyin",
+    "keywords": [
+        "pinyin",
+    ],	
     "license": "Apache-2.0",
     "authors": [
         {
@@ -11,6 +14,7 @@
     "require": {
 	   "php":">=5.5.0"
 	},
+	"minimum-stability":"",
 	"autoload":{
 	    "psr-4":{
 		    "Laofu\\Tools\\":"src"
