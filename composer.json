@@ -14,7 +14,7 @@
     "require": {
 	   "php":">=5.5.0"
 	},
-	"minimum-stability":"",
+	"minimum-stability":"stable",
 	"autoload":{
 	    "psr-4":{
 		    "Laofu\\Tools\\":"src"
