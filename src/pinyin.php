@@ -7,7 +7,7 @@ namespace Laofu\Tools;
  * print_r($allWord);
  * print_r($firstWord);
  */
-class strToPinyin
+class Pinyin
 {
 	public static $dict = 
 	array(
