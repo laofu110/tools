@@ -1,11 +1,8 @@
 <?php
 namespace Laofu\Tools;
 /**
- * 汉字转拼音类
+ * 汉字转拼音
  * 支持多音字、简繁中文，共20902个汉字
- * ChineseToPinyin::convert('测试一下啊',' ',$allWord,$firstWord);
- * print_r($allWord);
- * print_r($firstWord);
  */
 class Pinyin
 {
@@ -20915,43 +20912,35 @@ class Pinyin
 		'鈼'	=>	array('zuo'),
 	);
 	/**
-	 * 把字符串转为拼音结果
-	 * @param string $string
-	 * @return array
-	 */
-	public static function convert($string,$split = '',&$allWord,&$firstWord)
+       *返回转换后的拼音
+	   *$split为分割符
+	   *retrun string
+	*/
+	public function getPinyin($string,$split = '')
 	{
-		return self::parseResult(self::getResult($string),$split,$allWord,$firstWord);
-	}
-	/**
-	 * 处理结果
-	 * @param array $string
-	 * @return array
-	 */
-	public static function parseResult($result,$split = '',&$allWord,&$firstWord)
-	{
-		$allWord = $firstWord = array('');
-		foreach($result as $pinyins)
-		{
-			$count = count($pinyins);
-			$oldResultCount = count($allWord);
-			$oldResult = $allWord;
-			$oldResult2 = $firstWord;
-			for($i=0;$i<$count - 1;++$i)
-			{
-				$allWord = array_merge($allWord,$oldResult);
-				$firstWord = array_merge($firstWord,$oldResult2);
-			}
-			foreach($pinyins as $index => $pinyin)
-			{
-				for($i = 0; $i < $oldResultCount; ++$i)
-				{
-					$j = $index * $oldResultCount + $i;
-					$allWord[$j] .= $pinyin . $split;
-					$firstWord[$j] .= mb_substr($pinyin,0,1) . $split;
-				}
-			}
+		if(!$string){
+			return '';
 		}
+		$arr=self::getResult($string);
+		$rs=[];
+		foreach($arr as $li){
+			$rs[]=$li[0];
+		}
+		return implode($split,$rs);
+	}
+	/** 
+	  return array 字符串首字母
+	*/
+	public function firstWord($string){
+		if(!$string){
+			return '';
+		}
+		$arr=self::getResult($string);
+		$rs=[];
+		foreach($arr as $li){
+			$rs[]=mb_substr($li[0],0,1,'utf8');
+		}
+		return $rs;		
 	}
 	/**
 	 * 把字符串转为拼音数组结果
