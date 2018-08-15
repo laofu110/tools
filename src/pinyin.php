@@ -19,7 +19,7 @@ class Pinyin{
 		return implode($split,$rs);
 	}
 	/** 
-	  return array 字符串首字母
+	  *return array 字符串首字母
 	*/
 	public function firstWord($string){
 		if(!$string){
