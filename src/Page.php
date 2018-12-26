@@ -59,10 +59,7 @@ class Page
         // 用于分页sql用  M('article')->limit($Page->now_page-1.','.$Page->listRows)->select();
         $this->limit_page = $this->now_page - 1;
         $this->next_page  = $this->now_page + 1;
-        $this->url        = $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING'];
-        $this->url        = str_replace("/index.php", '', $this->url);
-        $this->url        = preg_replace("/&page=.*/i", '', $this->url);
-
+        $this->url        = $this->create_url();
         $this->number_start = $this->now_page - $this->number_show;
         $this->number_end = $this->now_page + $this->number_show;
         if($this->number_start<1){
@@ -100,7 +97,7 @@ class Page
 		if(!$simple){
 			// 首页
 			if ($this->now_page > 1) {
-				$page_html .= "<a class='page' href='" . $this->url . "'>首页</a>";
+				$page_html .= "<a class='page' href='" . $this->create_url() . "'>首页</a>";
 			}else{
 				$page_html .= "<a class='page-disable'>首页</a>";
 			}			
@@ -108,7 +105,7 @@ class Page
 
         // 上一页
         if ($this->pre_page > 0) {
-            $pre_page_url = $this->url . '&page=' . $this->pre_page;
+            $pre_page_url = $this->create_url(['page'=>$this->pre_page]);
             $page_html .= "<a class='page' href='" . $pre_page_url . "'>«</a>";
         }else{
             $page_html .= "<a class='page-disable'>«</a>";
@@ -117,17 +114,17 @@ class Page
 			//分页
 			for($i=$this->number_start;$i<=$this->number_end;$i++){
 				if($i==$this->now_page){
-					$pre_page_url = $this->url . '&page=' . $i;
+					$pre_page_url = $this->create_url(['page'=>$i]);
 					$page_html .= "<a class='page now-page' href='" . $pre_page_url . "'>$i</a>";
 				}else{
-					$pre_page_url = $this->url . '&page=' . $i;
+					$pre_page_url = $this->create_url(['page'=>$i]);
 					$page_html .= "<a class='page' href='" . $pre_page_url . "'>$i</a>";
 				}
 			}			
 		}
         // 下一页
         if ($this->next_page <= $this->totol_page) {
-            $next_page_url = $this->url . '&page=' . $this->next_page;
+            $next_page_url = $this->create_url(['page'=>$this->next_page]);
             $page_html .= "<a class='page' href='" . $next_page_url . "'>»</a>";
         }else{
             $page_html .= "<a class='page-disable'>»</a>";
@@ -135,7 +132,7 @@ class Page
 		if(!$simple){
 			// 尾页
 			if ($this->now_page < $this->totol_page) {
-				$last_page = $this->url . '&page=' . $this->totol_page;
+				$last_page = $this->create_url(['page'=>$this->totol_page]);
 				$page_html .= "<a class='page last-page' href='" . $last_page . "'>尾页</a>";
 			}else{
 				$page_html .= "<a class='last-page page-disable' >尾页</a>";
@@ -146,5 +143,24 @@ class Page
 		}
 		$page_html .='</div>';
         return $page_html;
+    }
+
+    public function create_url($param=[]){
+        $url= $_SERVER['REQUEST_URI'];
+        $url_info=parse_url($url);
+        $query_tem=explode('&',(isset($url_info['query'])?$url_info['query']:''));
+        $query=[];
+        foreach ($query_tem as $li) {
+            if($li!=null){
+                $li_tem=explode('=',$li);
+                $query[$li_tem[0]]=$li_tem[1];
+            }
+        }
+        if(empty($param)){
+            unset($query['page']);
+        }else{
+           $query= array_merge($query,$param);
+        }
+        return (!empty($query))?$url_info['path'].'?'.http_build_query($query):$url_info['path'];      
     }
 }

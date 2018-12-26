@@ -1,6 +1,6 @@
 {
     "name": "laofu110/tools",
-    "description": "some tools contain chinese convert to pinyin",
+    "description": "业务工具集合：汉子转拼音、GeoHash类、redis客户端（支持geo操作）、page分页（支持常规多页分页与简洁版的上下页分页）、分词操作类（支持返回全部分词结果与部分热门词）",
     "keywords": [
         "pinyin"
     ],	
