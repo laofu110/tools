@@ -41,7 +41,7 @@ class Pinyin{
 	{
 		$len = mb_strlen($string,'UTF-8');
 		$list = array();
-		require_once(dirname(__FILE__).'/data/pinyin.php');
+		require(dirname(__FILE__).'/data/pinyin.php');
 		for($i = 0; $i < $len; ++$i)
 		{
 			$word = mb_substr($string,$i,1,'UTF-8');
