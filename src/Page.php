@@ -153,7 +153,7 @@ class Page
         foreach ($query_tem as $li) {
             if($li!=null){
                 $li_tem=explode('=',$li);
-                $query[$li_tem[0]]=$li_tem[1];
+                $query[$li_tem[0]]=urldecode($li_tem[1]);
             }
         }
         if(empty($param)){
